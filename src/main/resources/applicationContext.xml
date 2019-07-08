@@ -9,27 +9,17 @@
 
     <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
-    <bean id="musicBean1"
-          class="spring.test.app.ClassicalMusic">
-    </bean>
-
-    <bean id="musicBean2"
-          class="spring.test.app.RockMusic">
-    </bean>
-
-    <bean id="musicBean3"
-          class="spring.test.app.RapMusic">
+    <bean id="musicBean"
+          class="spring.test.app.ClassicalMusic"
+          init-method="doMyInit"
+          destroy-method="doMyDestroy"
+          factory-method="getClassicalMusic"
+    >
     </bean>
 
     <bean id = "musicPlayer"
     class="spring.test.app.MusicPlayer">
-        <property name="musicList">
-            <list>
-                <ref bean="musicBean1"/>
-                <ref bean="musicBean2"/>
-                <ref bean="musicBean3"/>
-            </list>
-        </property>
+        <property name="music" ref="musicBean"/>
 
         <property name="name" value="${musicPlayer.name}"/>
         <property name="volume" value="${musicPlayer.volume}"/>
